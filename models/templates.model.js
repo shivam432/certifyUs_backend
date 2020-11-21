@@ -7,3 +7,8 @@ const templateSchema = new Schema({
         type: String
     }
 });
+
+const Template = mongoose.model('Template',templateSchema);
+
+module.exports = Template;
+
