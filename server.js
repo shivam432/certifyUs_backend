@@ -17,7 +17,7 @@ mongoose.connect(uri, {useNewUrlParser: true, useCreateIndex: true}
 const connection = mongoose.connection;
  connection.once('open',()=>{
      console.log("MongoDB database connection established");
- }) 
+ });
 
 const templatesRouter = require('./routes/templates');
 
@@ -25,4 +25,4 @@ app.use('/templates',templatesRouter);
 
 app.listen(port,() => {
     console.log('Server is running')
-})
+});
