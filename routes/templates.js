@@ -47,23 +47,5 @@ router.post('/add', upload.single('image'), (req, res, next) => {
     .then(() => res.json('Template added !'))
     .catch(err => res.status(400).json('Error: ' + err));
     });
-    // var obj = { 
-    //     url: req.file.path, 
-    //     img: { 
-    //         data: fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename)), 
-    //         contentType: 'image/png'
-    //     } 
-    // } 
-    // Template.create(obj, (err, item) => { 
-    //     if (err) { 
-    //         console.log(err); 
-    //     } 
-    //     else { 
-    //          item.save()
-    //          .then(() => res.json('Template added !'));
-    //         // res.redirect('/add'); 
-    //     } 
-    // }); 
-// }); 
 
  module.exports = router;
