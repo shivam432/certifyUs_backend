@@ -7,6 +7,8 @@ require('dotenv').config();
 
 const templatesRouter = require('./routes/templates');
 const userRoutes = require('./routes/user');
+const adminRoutes = require('./routes/admin');
+const customersRoutes = require('./routes/customers');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -30,6 +32,8 @@ const connection = mongoose.connection;
 
 app.use('/templates',templatesRouter);
 app.use('/user',userRoutes);
+app.use('/admin',adminRoutes);
+app.use('/customer',customersRoutes);
 app.use(express.static("uploads"));
 
 app.listen(port,() => {
