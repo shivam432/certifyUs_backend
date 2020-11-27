@@ -25,6 +25,7 @@ router.post('/signup',(req,res,next)=>{
                         const user = new User({
                             _id: new mongoose.Types.ObjectId(),
                             email:req.body.email,
+                            role:req.body.role,
                             password:hash,
                             });
                             user.save()
@@ -64,6 +65,7 @@ router.post("/login", (req, res, next) => {
             const token = jwt.sign(
               {
                 email: user[0].email,
+                role: user[0].role,
                 userId: user[0]._id
               },
               process.env.JWT_KEY,
@@ -73,6 +75,7 @@ router.post("/login", (req, res, next) => {
             );
             return res.status(200).json({
               message: "Auth successful",
+              role: user[0].role,
               token: token
             });
           }
