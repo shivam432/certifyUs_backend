@@ -30,6 +30,7 @@ const connection = mongoose.connection;
 
 app.use('/templates',templatesRouter);
 app.use('/user',userRoutes);
+app.use(express.static("uploads"));
 
 app.listen(port,() => {
     console.log('Server is running')

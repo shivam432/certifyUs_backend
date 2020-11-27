@@ -37,11 +37,13 @@ var upload = multer({ storage: storage })
  // Uploading the image 
 router.post('/add', upload.single('image'), (req, res, next) => { 
     const newTemplate = new Template({
-        url:req.file.path,
-        img: { 
-                data: fs.readFileSync(path.join('/home/sanskar/Desktop/DBMS_project_backend' + '/uploads/' + req.file.filename)), 
-                contentType: 'image/png'
-            } 
+        path:req.file.path,
+        url:req.file.filename,
+        name:req.body.name,
+        // img: { 
+        //         data: fs.readFileSync(path.join('/home/sanskar/Desktop/DBMS_project_backend' + '/uploads/' + req.file.filename)), 
+        //         contentType: 'image/png'
+        //     } 
     });
     newTemplate.save()
     .then(() => res.json('Template added !'))

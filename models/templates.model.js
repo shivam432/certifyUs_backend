@@ -3,14 +3,15 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const templateSchema = new Schema({
-    url: {
+    path: {
         type: String
     },
-    img: 
-    { 
-        data: Buffer, 
-        contentType: String 
-    } 
+    url: {
+        type:String
+    },
+    name: {
+        type:String
+    }
 });
 
 const Template = mongoose.model('Template',templateSchema);
