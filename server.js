@@ -5,6 +5,9 @@ const bodyParser = require('body-parser');
 
 require('dotenv').config();
 
+const templatesRouter = require('./routes/templates');
+const userRoutes = require('./routes/user');
+
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -23,9 +26,10 @@ const connection = mongoose.connection;
      console.log("MongoDB database connection established");
  });
 
-const templatesRouter = require('./routes/templates');
+
 
 app.use('/templates',templatesRouter);
+app.use('/user',userRoutes);
 
 app.listen(port,() => {
     console.log('Server is running')
