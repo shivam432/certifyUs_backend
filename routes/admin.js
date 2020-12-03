@@ -31,7 +31,8 @@ router.post('/add', upload.single('image'), (req, res, next) => {
    const newAdmin = new Admin({
        image:req.file.filename,
        name:req.body.name,
-       email:req.body.email
+       email:req.body.email,
+       certificates:[],
    });
    newAdmin.save()
    .then(() => res.json('Admin added !'))
