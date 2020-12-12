@@ -92,5 +92,10 @@ router.post("/login", (req, res, next) => {
       });
   });
 
+  router.route('/').get((req,res) => {
+    User.find()
+     .then(templates => res.json(templates))
+     .catch(err => res.status(400).json('error ' + err)); 
+});
 
 module.exports = router;

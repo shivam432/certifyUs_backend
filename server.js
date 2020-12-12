@@ -9,6 +9,7 @@ const templatesRouter = require('./routes/templates');
 const userRoutes = require('./routes/user');
 const adminRoutes = require('./routes/admin');
 const customersRoutes = require('./routes/customers');
+const exportedImgaes = require('./routes/exported-images');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -34,7 +35,7 @@ app.use('/templates',templatesRouter);
 app.use('/user',userRoutes);
 app.use('/admin',adminRoutes);
 app.use('/customer',customersRoutes);
-app.use(express.static("uploads"));
+app.use('/exported-images', express.static('uploads'));
 
 app.listen(port,() => {
     console.log('Server is running')
