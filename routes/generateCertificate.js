@@ -5,18 +5,22 @@ const parse = require('csv-parse');
 var Jimp = require('jimp');
 const nodemailer = require('nodemailer');
 const smtpTransport = require('nodemailer-smtp-transport');
+const User = require('../models/user.model');
+const Admin = require('../models/admin.model');
+const { resolve } = require('path');
+const Customers = require('../models/customers.model');
 
 var upload = multer({dest: './csv/'});
 
 var transporter = nodemailer.createTransport(smtpTransport({
     service: 'gmail',
     auth: {
-        user: 'isanskar2999@gmail.com',
-        pass: '7607694182'
+        user: 'email',
+        pass: 'password'
     }
   }));
 
-var text = `      <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+var text = ` <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
             <html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office" style="width:100%;font-family:tahoma, verdana, segoe, sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;padding:0;Margin:0">
             <head> 
             <meta charset="UTF-8"> 
@@ -258,7 +262,7 @@ router.post('/create',upload.single('file'), (req, res, next) => {
     fs.createReadStream(req.file.path)
     .pipe(
         parse({
-            delimiter: ';'
+            delimiter: ','
         })
     )
     .on('data',function(dataRow){
@@ -288,7 +292,7 @@ router.post('/create',upload.single('file'), (req, res, next) => {
           //send mail 
           const mailOptions = {
             to: data[1],
-            from: 'CertifyUs <isanskar2999@gmail.com>',
+            from: 'CertifyUs <shivamkummar189@gmail.com>',
             subject: `Certificate`,
             text: text,
             html: text,
@@ -298,18 +302,40 @@ router.post('/create',upload.single('file'), (req, res, next) => {
                 path: path 
               }
             ]  
-          };
+            };
+            
           transporter.sendMail(mailOptions, function(error, info){
             if(error){
               return console.log(error.message);
             }
             else {
+                var admin_email = req.body.admin_email;
+                console.log(admin_email);
+                Admin.findOneAndUpdate({ email: admin_email }, {
+                    $push:{certificates:filename}
+                }, {new:true}).then((user) => {
+                    if (user) {
+                        console.log('Certificate added to Admin database');
+                    } else {
+                        console.log('Noo user with the provided email id');
+                    }
+                }).catch((err) => {
+                    reject(err);
+                });
+                Customers.findOneAndUpdate({ email: data[1] }, {
+                    $push:{certificates:filename}
+                },{new:true}).then((user) => {
+                    if (user) {
+                        console.log('Certificate added to Customer database');
+                    } else {
+                        console.log('No user with the provided email id');
+                    }
+                }).catch((err) => {
+                    reject(err);
+                });
               return console.log("success");
             }
-          
           });
-
-
         })
     })
     }); 
