@@ -15,8 +15,8 @@ var upload = multer({dest: './csv/'});
 var transporter = nodemailer.createTransport(smtpTransport({
     service: 'gmail',
     auth: {
-        user: 'email',
-        pass: 'password'
+        user: 'isanskar2999@gmail.com',
+        pass: '7607694182'
     }
   }));
 
@@ -278,7 +278,7 @@ router.post('/create',upload.single('file'), (req, res, next) => {
            });
           
           const font1 = await Jimp.loadFont(Jimp.FONT_SANS_64_BLACK).then(font => {
-            image.print(font, 1000, 1160, "jerry otam");
+            image.print(font, 1000, 1160, req.body.signature);
           });
 
           const font2 = await Jimp.loadFont(Jimp.FONT_SANS_64_BLACK).then(font => {
@@ -292,7 +292,7 @@ router.post('/create',upload.single('file'), (req, res, next) => {
           //send mail 
           const mailOptions = {
             to: data[1],
-            from: 'CertifyUs <shivamkummar189@gmail.com>',
+            from: 'CertifyUs <isanskar2999@gmail.com>',
             subject: `Certificate`,
             text: text,
             html: text,
@@ -335,7 +335,8 @@ router.post('/create',upload.single('file'), (req, res, next) => {
                 });
               return console.log("success");
             }
-          });
+          }) .then(() => res.json('Certificates Generated !'))
+          .catch(err => res.status(400).json('Error: ' + err));
         })
     })
     }); 
