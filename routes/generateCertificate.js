@@ -15,8 +15,8 @@ var upload = multer({dest: './csv/'});
 var transporter = nodemailer.createTransport(smtpTransport({
     service: 'gmail',
     auth: {
-        user: 'isanskar2999@gmail.com',
-        pass: '7607694182'
+        user: 'certifyus2020@gmail.com',
+        pass: 'CertifyUs2020'
     }
   }));
 
