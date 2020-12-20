@@ -21,7 +21,7 @@ app.use(bodyParser.json())
 app.set("view engine", "ejs"); 
 
 const uri = process.env.ATLAS_URI;
-mongoose.connect(uri, {useNewUrlParser: true, useCreateIndex: true , useUnifiedTopology: true}
+mongoose.connect(uri, {useNewUrlParser: true, useCreateIndex: true , useUnifiedTopology: true, useFindAndModify: false }
     );
      
 const connection = mongoose.connection;

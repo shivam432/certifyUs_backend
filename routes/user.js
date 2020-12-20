@@ -98,4 +98,31 @@ router.post("/login", (req, res, next) => {
      .catch(err => res.status(400).json('error ' + err)); 
 });
 
+
+router.post('/updatePassword', (req, res, next) => {
+  bcrypt.hash(req.body.password,10,(err,hash)=>{
+    if(err){
+        return res.status(500).json({
+            error: err
+        })
+    }
+    else {
+      User.findOneAndUpdate({ email: req.body.email }, {
+        password:hash
+          }, {new:true}).then((user) => {
+              if (user) {
+                  console.log('password updated');
+              } else {
+                  console.log('No user exist');
+              }
+          }).catch((err) => {
+              reject(err);
+       })
+       .then(() => res.json('Password updated !'))
+       .catch(err => res.status(400).json('Error: ' + err));
+      }
+    })
+ });
+
+
 module.exports = router;
