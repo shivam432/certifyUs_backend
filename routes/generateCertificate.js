@@ -335,8 +335,7 @@ router.post('/create',upload.single('file'), (req, res, next) => {
                 });
               return console.log("success");
             }
-          }) .then(() => res.json('Certificates Generated !'))
-          .catch(err => res.status(400).json('Error: ' + err));
+          })
         })
     })
     }); 
