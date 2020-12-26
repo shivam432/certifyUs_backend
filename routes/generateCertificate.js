@@ -292,7 +292,7 @@ router.post('/create',upload.single('file'), (req, res, next) => {
           //send mail 
           const mailOptions = {
             to: data[1],
-            from: 'CertifyUs <isanskar2999@gmail.com>',
+            from: 'CertifyUs <certifyus2020@gmail.com>',
             subject: `Certificate`,
             text: text,
             html: text,
@@ -310,7 +310,7 @@ router.post('/create',upload.single('file'), (req, res, next) => {
             }
             else {
                 var admin_email = req.body.admin_email;
-                console.log(admin_email);
+                console.log(data[1]);
                 Admin.findOneAndUpdate({ email: admin_email }, {
                     $push:{certificates:filename}
                 }, {new:true}).then((user) => {
