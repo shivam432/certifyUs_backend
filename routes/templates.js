@@ -1,8 +1,6 @@
  const router = require('express').Router();
  const mongoose = require('mongoose');
  const Template = require('../models/templates.model');
- var Jimp = require('jimp');
-var fs = require('fs'); 
 var path = require('path'); 
 var multer = require('multer'); 
   
@@ -25,7 +23,6 @@ var upload = multer({ storage: storage })
 
  router.post('/add', upload.single('file') ,(req, res, next)=>{
      console.log(req.body.name);
-     console.log('hey man');
     Template.find({name:req.body.name})
     .exec()
     .then(async template=> {
@@ -53,6 +50,22 @@ var upload = multer({ storage: storage })
             })
         }
     })
+ });
+
+ router.post('/delete', (req,res,next)=>{
+     console.log(req.body.name);
+     Template.findOneAndRemove({name:req.body.name},
+        function(err,docs){
+            if(err){
+                console.log(err);
+            }else{
+                res.status(201).json({
+                    message:'Removed User'
+                });
+                console.log("Removed User: ", docs);
+            }
+        }
+        )
  });
 
 
